@@ -53,13 +53,15 @@ module Google
       #
       # @param json_key_io [IO] an IO from which the JSON key can be read
       # @param scope [string|array|nil] the scope(s) to access
+      # @param client_email [string|nil] client email address for the service account
+      # @param private_key [string|nil] private key from the servicve account
       def self.make_creds(options = {})
         json_key_io, scope = options.values_at(:json_key_io, :scope)
         if json_key_io
           private_key, client_email = read_json_key(json_key_io)
         else
-          private_key = ENV[CredentialsLoader::PRIVATE_KEY_VAR]
-          client_email = ENV[CredentialsLoader::CLIENT_EMAIL_VAR]
+          private_key = options[:private_key] || ENV[CredentialsLoader::PRIVATE_KEY_VAR]
+          client_email = options[:client_email] || ENV[CredentialsLoader::CLIENT_EMAIL_VAR]
         end
 
         new(token_credential_uri: TOKEN_CRED_URI,

@@ -139,7 +139,27 @@ scope = 'https://www.googleapis.com/auth/androidpublisher'
 authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
   json_key_io: File.open('/path/to/service_account_json_key.json'),
   scope: scope)
-  
+
+authorizer.fetch_access_token!
+```
+If you don't wish to pass in the json_key_io option, the values in your service account json file can also be set as environment variables:
+```bash
+GOOGLE_PRIVATE_KEY = <private_key>
+GOOGLE_CLIENT_EMAIL = <client_email>
+```
+```ruby
+authorizer = Google::Auth::ServiceAccountCredentials.make_creds(scope: scope)
+authorizer.fetch_access_token!
+```
+
+or directly to `::make_creds`:
+
+```ruby
+authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
+  private_key: <private_key>,
+  client_email: <client_email>,
+  scope: scope)
+
 authorizer.fetch_access_token!
 ```
 
