@@ -143,11 +143,11 @@ authorizer = Google::Auth::ServiceAccountCredentials.make_creds(
 authorizer.fetch_access_token!
 ```
 If you don't wish to pass in the json_key_io option, the values in your service account json file can also be set as environment variables:
-```bash
-GOOGLE_PRIVATE_KEY = <private_key>
-GOOGLE_CLIENT_EMAIL = <client_email>
-```
+
 ```ruby
+ENV['GOOGLE_PRIVATE_KEY'] # => <private_key>
+ENV['GOOGLE_CLIENT_EMAIL'] # => <client_email>
+
 authorizer = Google::Auth::ServiceAccountCredentials.make_creds(scope: scope)
 authorizer.fetch_access_token!
 ```
